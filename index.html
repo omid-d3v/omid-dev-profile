@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile Card</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-color: #1e1e1e;
+            --primary-text-color: #ffffff;
+            --secondary-text-color: #a0a0a0;
+            --accent-color: #bb86fc;
+            --shadow-color: rgba(187, 134, 252, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Hide scrollbars from canvas */
+        }
+
+        /* Animated background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .profile-card {
+            background-color: var(--card-color);
+            width: 90%;
+            max-width: 350px;
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 25px var(--shadow-color);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            
+            /* --- Entrance Animation --- */
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: fadeInCard 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent-color);
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px var(--shadow-color);
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .profile-title {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--secondary-text-color);
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            color: var(--secondary-text-color);
+            box-shadow: 5px 5px 10px #161616, -5px -5px 10px #262626;
+            transition: all 0.3s ease-in-out;
+            
+            /* --- Staggered Animation for Buttons --- */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInButton 0.5s ease-out forwards;
+        }
+        
+        /* Staggered animation delays */
+        .social-btn:nth-child(1) { animation-delay: 1.0s; }
+        .social-btn:nth-child(2) { animation-delay: 1.1s; }
+        .social-btn:nth-child(3) { animation-delay: 1.2s; }
+        .social-btn:nth-child(4) { animation-delay: 1.3s; }
+        .social-btn:nth-child(5) { animation-delay: 1.4s; }
+
+        @keyframes fadeInButton {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .social-btn:hover {
+            color: var(--accent-color);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .social-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .social-btn:hover i {
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Canvas for animated background -->
+    <div id="particles-js"></div>
+
+    <div class="profile-card">
+        <!-- 
+            =================================
+            ویرایش اطلاعات پروفایل
+            =================================
+            1. آدرس عکس پروفایل خود را در src تگ img زیر قرار دهید.
+            2. نام خود را در تگ h1 جایگزین کنید.
+            3. عنوان شغلی خود را در تگ p جایگزین کنید.
+            4. لینک شبکه‌های اجتماعی خود را در href تگ‌های a مربوطه قرار دهید.
+        -->
+
+        <!-- 1. عکس پروفایل -->
+        <img src="https://placehold.co/150x150/2a2a2a/ffffff?text=Me" alt="Profile Picture" class="profile-pic" onerror="this.onerror=null;this.src='https://placehold.co/150x150/2a2a2a/ffffff?text=Me';">
+
+        <!-- 2. نام -->
+        <h1 class="profile-name">Omid Madah</h1>
+
+        <!-- 3. عنوان شغلی -->
+        <p class="profile-title">Product Designer & Creative Developer</p>
+
+        <!-- 4. لینک‌های شبکه‌های اجتماعی -->
+        <div class="social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/omid-maddah-4887001b9/" target="_blank" class="social-btn" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com/omid__dev" target="_blank" class="social-btn" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <!-- GitHub -->
+            <a href="https://github.com/omid-d3v" target="_blank" class="social-btn" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <!-- Figma -->
+            <a href="https://figma.com/@omid_dev" target="_blank" class="social-btn" aria-label="Figma">
+                <i class="fab fa-figma"></i>
+            </a>
+            <!-- Medium -->
+            <a href="https://medium.com/@omiddev/" target="_blank" class="social-btn" aria-label="Medium">
+                <i class="fab fa-medium"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- particles.js library for animated background -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Configuration for particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 60, // تعداد ذرات
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#bb86fc" // رنگ ذرات
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                },
+                "opacity": {
+                    "value": 0.4,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#bb86fc",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab" // حالت تعامل در هاور
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push" // حالت تعامل در کلیک
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
